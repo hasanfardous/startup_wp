@@ -10,6 +10,10 @@
 if ( ! defined( '_S_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
 	define( '_S_VERSION', '1.0.0' );
+	define( 'TEMPLATE_DIR', get_template_directory_uri() );
+	define( 'TEMPLATE_CSS_DIR', get_template_directory_uri() . '/css' );
+	define( 'TEMPLATE_JS_DIR', get_template_directory_uri() . '/js' );
+	define( 'TEMPLATE_IMG_DIR', get_template_directory_uri() . '/img' );
 }
 
 /**
@@ -138,10 +142,23 @@ add_action( 'widgets_init', 'startup_wp_widgets_init' );
  * Enqueue scripts and styles.
  */
 function startup_wp_scripts() {
+	// Enqueue CSS Files
+	wp_enqueue_style( 'startup_wp-font-awesome', TEMPLATE_CSS_DIR . '/font-awesome.min.css', array(), _S_VERSION );
+	wp_enqueue_style( 'startup_wp-owl-carousel', TEMPLATE_CSS_DIR . '/owl.carousel.min.css', array(), _S_VERSION );
+	wp_enqueue_style( 'startup_wp-animate-css', TEMPLATE_CSS_DIR . '/animate.min.css', array(), _S_VERSION );
+	wp_enqueue_style( 'startup_wp-bootstrap-css', TEMPLATE_CSS_DIR . '/bootstrap.min.css', array(), _S_VERSION );
+	wp_enqueue_style( 'startup_wp-style-css', TEMPLATE_CSS_DIR . '/style.css', array(), _S_VERSION );
 	wp_enqueue_style( 'startup_wp-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_style_add_data( 'startup_wp-style', 'rtl', 'replace' );
 
-	wp_enqueue_script( 'startup_wp-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+	// Enqueue JS Files
+	wp_enqueue_script( 'startup_wp_bootstrap-js', TEMPLATE_JS_DIR . '/bootstrap.bundle.min.js', array('jquery'), _S_VERSION, true );
+	wp_enqueue_script( 'startup_wp_wow-js', TEMPLATE_JS_DIR . '/wow.min.js', array('jquery'), _S_VERSION, true );
+	wp_enqueue_script( 'startup_wp_waypoint-js', TEMPLATE_JS_DIR . '/waypoints.min.js', array('jquery'), _S_VERSION, true );
+	wp_enqueue_script( 'startup_wp_counterup-js', TEMPLATE_JS_DIR . '/counterup.min.js', array('jquery'), _S_VERSION, true );
+	wp_enqueue_script( 'startup_wp_owl-carousel-js', TEMPLATE_JS_DIR . '/owl.carousel.min.js', array('jquery'), _S_VERSION, true );
+	wp_enqueue_script( 'startup_wp-navigation', TEMPLATE_JS_DIR . '/navigation.js', array('jquery'), _S_VERSION, true );
+	wp_enqueue_script( 'startup_wp-main-js', TEMPLATE_JS_DIR . '/main.js', array('jquery'), _S_VERSION, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
