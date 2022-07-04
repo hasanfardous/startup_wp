@@ -99,28 +99,39 @@
 
         <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="w-100" src="<?php echo TEMPLATE_IMG_DIR?>/carousel-1.jpg" alt="Image">
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3" style="max-width: 900px;">
-                            <h5 class="text-white text-uppercase mb-3 animated slideInDown">Creative & Innovative</h5>
-                            <h1 class="display-1 text-white mb-md-4 animated zoomIn">Creative & Innovative Digital Solution</h1>
-                            <a href="quote.html" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Free Quote</a>
-                            <a href="" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Contact Us</a>
+                <?php
+                    $args = array(
+                        'post_type' => 'slider',
+                        'order'     => 'ASC'
+                    );
+                    // The Query
+                    $sliders = new WP_Query( $args );
+                    $counter = 0;
+                    // The Loop
+                    while ( $sliders->have_posts() ) {
+                        $sliders->the_post();
+                        $counter++;
+                        if ( $counter == 1 ) {
+                            $active_class = 'active';
+                        } else {
+                            $active_class = '';
+                        }
+                        ?>
+                        <div class="carousel-item <?php echo $active_class?>">
+                            <?php the_post_thumbnail('full', array('class' => 'w-100', 'alt' => get_the_title()))?>
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3" style="max-width: 900px;">
+                                    <h5 class="text-white text-uppercase mb-3 animated slideInDown"><?php the_title()?></h5>
+                                    <h1 class="display-1 text-white mb-md-4 animated zoomIn"><?php the_content()?></h1>
+                                    <a href="#" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Free Quote</a>
+                                    <a href="#" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Contact Us</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img class="w-100" src="<?php echo TEMPLATE_IMG_DIR?>/carousel-2.jpg" alt="Image">
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3" style="max-width: 900px;">
-                            <h5 class="text-white text-uppercase mb-3 animated slideInDown">Creative & Innovative</h5>
-                            <h1 class="display-1 text-white mb-md-4 animated zoomIn">Creative & Innovative Digital Solution</h1>
-                            <a href="quote.html" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Free Quote</a>
-                            <a href="" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">Contact Us</a>
-                        </div>
-                    </div>
-                </div>
+                        <?php
+                    }
+                    wp_reset_postdata();
+                ?>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel"
                 data-bs-slide="prev">

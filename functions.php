@@ -193,3 +193,43 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+	
+// Slider - Custom Post Type
+function slider_custom_posts() {	
+	$labels = array(
+		'name'               => _x( 'Sliders', 'post type general name', 'medi-companion' ),
+		'singular_name'      => _x( 'Slider', 'post type singular name', 'medi-companion' ),
+		'menu_name'          => _x( 'Sliders', 'admin menu', 'medi-companion' ),
+		'name_admin_bar'     => _x( 'Slider', 'add new on admin bar', 'medi-companion' ),
+		'add_new'            => _x( 'Add New', 'slider', 'medi-companion' ),
+		'add_new_item'       => __( 'Add New Slider', 'medi-companion' ),
+		'new_item'           => __( 'New Slider', 'medi-companion' ),
+		'edit_item'          => __( 'Edit Slider', 'medi-companion' ),
+		'view_item'          => __( 'View Slider', 'medi-companion' ),
+		'all_items'          => __( 'All Sliders', 'medi-companion' ),
+		'search_items'       => __( 'Search Sliders', 'medi-companion' ),
+		'parent_item_colon'  => __( 'Parent Sliders:', 'medi-companion' ),
+		'not_found'          => __( 'No sliders found.', 'medi-companion' ),
+		'not_found_in_trash' => __( 'No sliders found in Trash.', 'medi-companion' )
+	);
+
+	$args = array(
+		'labels'             => $labels,
+		'description'        => __( 'Description.', 'medi-companion' ),
+		'public'             => true,
+		'publicly_queryable' => true,
+		'show_ui'            => true,
+		'show_in_menu'       => true,
+		'query_var'          => true,
+		'rewrite'            => array( 'slug' => 'slider' ),
+		'capability_type'    => 'post',
+		'has_archive'        => true,
+		'hierarchical'       => false,
+		'menu_position'      => null,
+		'supports'           => array( 'title', 'editor', 'thumbnail' )
+	);
+
+	register_post_type( 'slider', $args );
+
+}
+add_action( 'init', 'slider_custom_posts' );
